@@ -2,15 +2,6 @@ workflows:
   react-native-expo-workflow:
     name: React Native Expo WooCommerce App
     environment:
-      groups:
-        - app_store_credentials
-        - certificates
-        - environment_variables
-      vars:
-        XCODE_WORKSPACE: "ios/WooCommerceClean.xcworkspace"
-        XCODE_SCHEME: "WooCommerceClean"
-        BUNDLE_ID: "com.priyagold.WooCommerceClean"
-        APP_NAME: "WooCommerce Store"
       node: 20.18.1
       xcode: 16.2
       cocoapods: default
@@ -18,15 +9,10 @@ workflows:
       - name: Install dependencies
         script: |
           npm install
-          npm install -g expo-cli eas-cli
-      - name: Install CocoaPods dependencies
+          npm install -g eas-cli
+      - name: Install CocoaPods
         script: |
           cd ios && pod install && cd ..
-      - name: Set up environment variables
-        script: |
-          echo "API_URL=$API_URL" >> .env
-          echo "CONSUMER_KEY=$CONSUMER_KEY" >> .env
-          echo "CONSUMER_SECRET=$CONSUMER_SECRET" >> .env
       - name: Prebuild Expo project
         script: |
           npx expo prebuild --clean
@@ -34,29 +20,14 @@ workflows:
         script: |
           cd android
           ./gradlew assembleRelease
-        ignore_failure: false
       - name: Build iOS IPA
         script: |
-          cd ios
-          xcodebuild -workspace "$XCODE_WORKSPACE" -scheme "$XCODE_SCHEME" -sdk iphoneos -configuration Release archive -archivePath "$FCI_BUILD_DIR/ios/build/WooCommerceClean.xcarchive"
-          xcodebuild -exportArchive -archivePath "$FCI_BUILD_DIR/ios/build/WooCommerceClean.xcarchive" -exportPath "$FCI_BUILD_DIR/ios/build" -exportOptionsPlist "$FCI_BUILD_DIR/ios/exportOptions.plist"
-        ignore_failure: true
+          eas build --platform ios --profile preview --non-interactive --wait
     artifacts:
       - android/app/build/outputs/**/*.apk
       - android/app/build/outputs/**/*.aab
-      - ios/build/*.ipa
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      - builds/**/*.ipa
     publishing:
       email:
         recipients:
           - your-email@example.com
-        notify:
-          success: true
-          failure: true
-      slack:
-        channel: '#builds'
-        notify:
-          start: true
-          success: true
-          failure: true
