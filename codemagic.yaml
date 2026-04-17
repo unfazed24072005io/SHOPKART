@@ -56,6 +56,7 @@ workflows:
           failure: true
       slack:
         channel: '#builds'
-        notify_on_build_start: true
-        notify_on_build_success: true
-        notify_on_build_failure: true
+        notify:
+          start: true
+          success: true
+          failure: true
