@@ -1,0 +1,33 @@
+workflows:
+  react-native-expo-workflow:
+    name: React Native Expo WooCommerce App
+    environment:
+      node: 20.18.1
+      xcode: 16.2
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+          npm install -g eas-cli
+      - name: Install CocoaPods
+        script: |
+          cd ios && pod install && cd ..
+      - name: Prebuild Expo project
+        script: |
+          npx expo prebuild --clean
+      - name: Build Android APK
+        script: |
+          cd android
+          ./gradlew assembleRelease
+      - name: Build iOS IPA
+        script: |
+          eas build --platform ios --profile preview --non-interactive --wait
+    artifacts:
+      - android/app/build/outputs/**/*.apk
+      - android/app/build/outputs/**/*.aab
+      - builds/**/*.ipa
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com

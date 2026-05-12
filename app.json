@@ -1,38 +1,38 @@
 {
   "expo": {
-    "name": "WooCommerceClean",
-    "slug": "WooCommerceClean",
+    "name": "Adrika's Cosmetics World",
+    "slug": "adrikas-cosmetics-world",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/acw.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/acw.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.priyagold.WooCommerceClean",
+      "bundleIdentifier": "com.adrika.cosmeticsworld",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/acw.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.priyagold.WooCommerceClean"
+      "package": "com.adrika.cosmeticsworld"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/acw.png"
     },
     "extra": {
       "eas": {
-        "projectId": "0a1ae623-5789-460b-afd4-786dc8667df6"
+        "projectId": "ea529fcf-9b6e-4023-8ac0-93fc2557fbef"
       }
     }
   }

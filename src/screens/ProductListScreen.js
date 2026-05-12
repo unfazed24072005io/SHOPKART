@@ -40,19 +40,21 @@ const ProductListScreen = ({ navigation }) => {
   }, []);
 
   const loadProducts = async () => {
-    try {
-      setLoading(true);
-      const data = await getProducts();
-      setProducts(data);
-      console.log('Loaded products:', data.length);
-    } catch (error) {
-      console.error('Error loading products:', error);
-      Alert.alert('Error', 'Failed to load products');
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  };
+  try {
+    setLoading(true);
+    const data = await getProducts();
+    console.log('Loaded products:', data.length);
+    console.log('First product:', data[0]); // Add this
+    console.log('Product statuses:', data.map(p => ({ name: p.name, status: p.status }))); // Add this
+    setProducts(data);
+  } catch (error) {
+    console.error('Error loading products:', error);
+    Alert.alert('Error', 'Failed to load products');
+  } finally {
+    setLoading(false);
+    setRefreshing(false);
+  }
+};
 
   const handleRefresh = () => {
     setRefreshing(true);

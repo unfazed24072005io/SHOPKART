@@ -1,12 +1,15 @@
-const API_URL = "https://demo.whoiam.in/wp-json/wc/v3";
-const CONSUMER_KEY = "ck_b9f411e2e0d7a352bdfdbf86aac98335d1e44379";
-const CONSUMER_SECRET = "cs_5174ac3c43c4ea980cfafd9327308d15939dfaf0";
+const API_URL = "https://acw.ind.in/wp-json/wc/v3";
+const CONSUMER_KEY = "ck_c8144e0657c7360736cf4d05987f544b1bd5f71b";
+const CONSUMER_SECRET = "cs_efb685a3e88d7166d21f1e6360fc49e531ad2db0";
 
 export const getProducts = async (page = 1, perPage = 100) => {
   try {
-    const url = `${API_URL}/products?per_page=${perPage}&page=${page}&consumer_key=${CONSUMER_KEY}&consumer_secret=${CONSUMER_SECRET}`;
+    // Add status=any to get all products including drafts
+    const url = `${API_URL}/products?per_page=${perPage}&page=${page}&status=any&consumer_key=${CONSUMER_KEY}&consumer_secret=${CONSUMER_SECRET}`;
     const response = await fetch(url);
     const data = await response.json();
+    console.log("Products loaded:", data.length);
+    console.log("First product status:", data[0]?.status);
     return data;
   } catch (error) {
     console.error("Error fetching products:", error);
